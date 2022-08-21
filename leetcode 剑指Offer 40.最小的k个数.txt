@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<int> getLeastNumbers(vector<int>& arr, int k) {
+        if(k==0){
+            return {};
+        }
+        else{
+        int p=find(arr,0,arr.size()-1,k-1);
+        arr.resize(p+1);
+        return arr;
+        }
+    }
+    int find(vector<int>& nums, int l,int r,int k){
+        int p=partition(nums,l,r);
+        if(p==k) return p;
+        else if(k<p){
+            return find(nums,l,p-1,k);
+        }
+        else{
+            return find(nums,p+1,r,k);
+        }
+    }
+ int partition(vector<int>&arr, int l, int r)
+{
+	srand(time(NULL));
+	int rnd = l + rand() % (r - l + 1);
+	swap(arr, l, rnd);
+	int i = l + 1, j = r;
+	while (true) {
+		while (i <= j && arr[i] < arr[l]) { i++; }
+		while (j >= i && arr[j] > arr[l]) { j--; }
+		if (i >= j) break;
+		swap(arr, i, j);
+		i++;
+		j--;
+	}
+	swap(arr, l, j);
+	return j;
+}
+    void swap(vector<int>&arr, int i, int j)
+    {
+        int t = arr[j];
+        arr[j] = arr[i];
+        arr[i] = t;
+    }
+};
